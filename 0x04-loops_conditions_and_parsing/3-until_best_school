@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-counter=0
+#displays "Best School" 10 times using an until loop.
+count=0
 
 until [ $counter -ge 10 ]
 do
     echo "Best School"
-    ((counter++))
+    ((count++))
 done
 
