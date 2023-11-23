@@ -2,7 +2,7 @@
 
 #displays "Best School" 10 times using a while loop.
 # On the 9th iteration, displays "Hi" before "Best School".
-counter=0
+counter=1
 
 while [ $counter -le 10 ]
 do
