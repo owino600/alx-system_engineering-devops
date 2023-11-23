@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+hours=0
+
+while [ $hours -le 12 ]
+do
+    minutes=1
+    while [ $minutes -le 59 ]
+    do
+        printf "%02d:%02d\n" $hours $minutes
+        ((minutes++))
+        if [ $minutes -gt 59 ]; then
+            break
+        fi
+    done
+    ((hours++))
+done | head -n 70
+
