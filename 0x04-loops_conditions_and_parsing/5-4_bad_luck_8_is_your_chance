@@ -19,5 +19,3 @@ do
     
     ((counter++))
 done
-
-ops from 1 to 10 and displays:
