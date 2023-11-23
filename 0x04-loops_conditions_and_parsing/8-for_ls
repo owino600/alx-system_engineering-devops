@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-for file in *
+#displays the contents of the current directory in list format.
+#   Only displays the part of the name after the first dash. 
+
 do
     if [ -f "$file" ] && [[ "$file" != .* ]]  # Check if it's a file and not hidden
     then
