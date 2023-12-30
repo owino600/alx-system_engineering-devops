@@ -13,6 +13,8 @@ optionally logs process messages about detected anomalies or other notable event
 ## Application server
 * an application server exposes business logic to client applications through various protocols, possibly including HTTP. 
 * [!application server](https://www.infoworld.com/article/2077354/app-server-web-server-what-s-the-difference.html)
+## Purpose of application server
+* Hosts application back ends that user clients (front ends, web apps or locally installed applications) in the network connect to and use.
 ## DNS RECORD
 * is a global system responsible for mapping human-readable hostnames to their corresponding Internet Protocol (IP) addresses
 ## DNS record types
