@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+sudo apt-get -y update
+sudo apt-get install -y nginx
+
+#nginx listen to port 80
+ufw allow 'Nginx HTTP'
+
+#default page
+echo "Hello World" > /var/www/html/index.html
+
+#restart nginx
+sudo service nginx restart

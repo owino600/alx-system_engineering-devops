@@ -5,15 +5,14 @@ echo "First Argument: $1"
 echo "Second Argument: $2"
 echo "Third Argument: $3"
 
-PATH_TO_FILE=$1
-IP=$2
-USERNAME=$3
-PATH_TO_SSH_KEY=$4
+PATH_TO_FILE="$1"
+IP="$2"
+USERNAME="$3"
+PATH_TO_SSH_KEY="$4"
 
 if [ "$#" -ne 4 ];
 then
     echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
-
-else
-    scp -o StrictHostKeyChecking=no -i "$PATH_TO_FILE" -k "$PATH_TO_SSH_KEY" "$USERNAME"@"$IP":~/
+    exit 1
 fi
+scp -o StrictHostKeyChecking=no -i "$PATH_TO_SSH_KEY" "$PATH_TO_FILE" "$USERNAME"@"$IP":~/
