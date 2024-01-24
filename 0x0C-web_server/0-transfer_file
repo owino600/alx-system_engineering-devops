@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#transfers a file from our client to a server
 echo "script name: $0"
 echo "First Argument: $1"
 echo "Second Argument: $2"
