@@ -1,0 +1,5 @@
+# Use an official Apache image as a base image
+FROM httpd:latest
+
+# Copy the index.html file into the document root of the Apache server
+COPY index.html /usr/local/apache2/htdocs/
