@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 echo "script name: $0"
 echo "First Argument: $1"
