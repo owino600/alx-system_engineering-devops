@@ -18,6 +18,6 @@ echo "
    option forwardfor
    server 436900-web-01 107.22.141.211 check
    server 436900-web-02 100.26.255.73 check
-" >> /etc/haproxy/haproxy.cfg
+" > /etc/haproxy/haproxy.cfg
 
 service haproxy start
