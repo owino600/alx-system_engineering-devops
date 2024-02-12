@@ -1,4 +1,4 @@
-#!/bin/bash env
+#!/bin/usr/bash env
 #progress used
 sudo get-apt install ufw
 sudo ufw allow 22/tcp
