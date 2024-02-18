@@ -39,5 +39,6 @@ frontend http-in
 
 backend servers
         balance roundrobin
+redirect scheme https if !{ ssl_fc }
         server 436900-web-01 100.25.37.44 check
         server 436900-web-02 54.157.178.65 check
