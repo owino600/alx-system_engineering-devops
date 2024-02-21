@@ -31,14 +31,20 @@ defaults
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
-frontend http-in
-        bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/live/www.dantese.tech/fullchain.pem
-        reqadd X-Forwarded-Proto:\ https
-        default_backend servers
 
-backend servers
+frontend www-http
+        bind *:80
+        reqadd X-Forwarded-Proto:\ http
+        default_backend www-backend
+
+frontend www-https
+        bind *:443 ssl crt /etc/letsencrypt/live/www.dantese.tech-0001/combined.pem
+        reqadd X-Forwarded-Proto:\ https
+        acl is_root path -i /
+        use_backend www-backend if is_root
+
+        
+backend www-backend
         balance roundrobin
-redirect scheme https if !{ ssl_fc }
-        server 436900-web-01 100.25.37.44 check
-        server 436900-web-02 54.157.178.65 check
+        server web-01 100.25.37.44:80 check
+        server web-02 54.157.178.65:80 check
