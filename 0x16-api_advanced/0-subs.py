@@ -1,34 +1,16 @@
 #!/usr/bin/python3
-"""my python"""
+"""Function to query subscribers on a given Reddit subreddit."""
 import requests
 
-def number_of_subscribers(subreddit):
-    """
-    Returns the total number of subscribers for a given subreddit.
-    
-    Args:
-        subreddit (str): The name of the subreddit.
-    
-    Returns:
-        int: Total number of subscribers, or 0 if the subreddit is invalid.
-    """
-    try:
-        # Set a custom User-Agent to avoid Too Many Requests errors
-        headers = {'User-Agent': 'MyRedditBot'}
-        
-        # Make an API request to get subreddit information
-        url = f'https://www.reddit.com/r/{subreddit}/about.json'
-        response = requests.get(url, headers=headers)
-        data = response.json()
-        
-        # Extract the subscriber count
-        subscribers = data['data']['subscribers']
-        return subscribers
-    except (KeyError, requests.RequestException):
-        # Invalid subreddit or other error occurred
-        return 0
 
-# Example usage:
-subreddit_name = 'learnprogramming'
-subscribers_count = number_of_subscribers(subreddit_name)
-print(f"Subscribers in r/{subreddit_name}: {subscribers_count}")
+def number_of_subscribers(subreddit):
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {
+        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
+    }
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 404:
+        return 0
+    results = response.json().get("data")
+    return results.get("subscribers")
