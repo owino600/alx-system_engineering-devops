@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Function to count words in all hot posts of a given Reddit subreddit."""
 
-import requests
 from collections import Counter
 from re import findall
+import requests
 
 def count_words(subreddit, word_list, after="", word_count=Counter()):
     base_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
