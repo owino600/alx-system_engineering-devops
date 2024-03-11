@@ -5,6 +5,7 @@ from collections import Counter
 from re import findall
 import requests
 
+
 def count_words(subreddit, word_list, after="", word_count=Counter()):
     base_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -26,5 +27,8 @@ def count_words(subreddit, word_list, after="", word_count=Counter()):
     if after:
         count_words(subreddit, word_list, after, word_count)
     else:
-        for word, count in sorted(word_count.items(), key=lambda x: (-x[1], x[0])):
+        sorted_word_count = sorted(
+                word_count.items(), key=lambda x: (-x[1], x[0])
+                )
+        for word, count in sorted_word_count:
             print("{}: {}".format(word, count))
