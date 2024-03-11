@@ -7,10 +7,8 @@ def recurse(subreddit, hot_list=[], after="", count=0):
     """Returns a list of titles of all hot posts on a given subreddit."""
     if hot_list is None:
         hot_list = []
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {
-        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
-    }
+    url = "https://www.reddit.com/r/{subreddit}/hot/.json".format(subreddit)
+    headers = {'User-agent': 'Mozilla/5.0'}
     params = {
         "after": after,
         "count": count,
@@ -18,15 +16,13 @@ def recurse(subreddit, hot_list=[], after="", count=0):
     }
     response = requests.get(url, headers=headers, params=params,
                             allow_redirects=False)
-    if response.status_code == 404:
+    if response.status_code != 200:
         return None
-    
-    data = response.json().get('data', {})
-    after = data.get('after', "")
-    posts = data.get('children', [])
-    for post in posts:
-        title = post.get('data', {}).get('title', "")
-        hot_list.append(title)
-    if after is not None:
-        return recurse(subreddit, hot_list, after, count)
+    data = response.json()
+    hot_list.extend([post['data']['title'] for post in data['data']['children']])
+    #If there are more posts, recurse with the 'after' parameter8
+    after = data['data']['after']
+    if after:
+        return recurse(subreddit, hot_list, after)
+
     return hot_list
