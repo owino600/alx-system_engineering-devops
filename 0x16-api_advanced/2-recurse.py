@@ -2,27 +2,34 @@
 """Function to query a list of all hot posts on a given Reddit subreddit."""
 import requests
 
-
-def recurse(subreddit, hot_list=[], after="", count=0):
-    """Returns a list of titles of all hot posts on a given subreddit."""
+def recurse(subreddit, hot_list=None, after=None):
     if hot_list is None:
         hot_list = []
-    url = "https://www.reddit.com/r/{subreddit}/hot/.json".format(subreddit)
-    headers = {'User-agent': 'Mozilla/5.0'}
-    params = {
-        "after": after,
-        "count": count,
-        "limit": 100
-    }
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
-    if response.status_code != 200:
-        return None
-    data = response.json()
-    hot_list.extend([post['data']['title'] for post in data['data']['children']])
-    #If there are more posts, recurse with the 'after' parameter8
-    after = data['data']['after']
-    if after:
-        return recurse(subreddit, hot_list, after)
 
-    return hot_list
+    # Base case: No more results
+    if after == "":
+        if not hot_list:
+            return None  # If no results found
+        return hot_list
+
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    params = {"limit": 100, "after": after}
+    headers = {"User-Agent": "Mozilla/5.0"}  # Add a User-Agent header to avoid 429 error (Too Many Requests)
+
+    try:
+        response = requests.get(url, params=params, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+    except (requests.RequestException, ValueError) as e:
+        print(f"Error fetching data for subreddit '{subreddit}': {e}")
+        return None
+
+    if 'error' in data:
+        print(f"Error: {data['message']}")
+        return None
+
+    children = data['data']['children']
+    hot_list.extend([child['data']['title'] for child in children])
+
+    after = data['data']['after']
+    return recurse(subreddit, hot_list, after)
